@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ $1 != ''  ]
+then
+    composer.phar create-project symfony/framework-standard-edition $1 $2
+else
+    echo "enter <directory> and <version>"
+fi

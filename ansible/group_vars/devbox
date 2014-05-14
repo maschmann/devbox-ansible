@@ -1,0 +1,10 @@
+dev_user: wwwdev
+dev_home: /home/www/wwwdev
+dev_group: wwwdev
+
+default_server_domain: dev.local
+default_server_home: /home/www/wwwdev
+default_server_user: wwwdev
+default_server_group: wwwdev
+default_server_fcgi: 9000
+default_server_pool: default

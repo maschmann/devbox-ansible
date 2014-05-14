@@ -1,0 +1,36 @@
+# copy needed files
+- copy: src=/srv/myfiles/foo.conf dest=/etc/foo.conf owner=foo group=foo mode=0644
+
+# Update the repo, because most boxes are heavily outdated
+- name: Commmon | Update repository
+  action: command /usr/bin/apt-get update
+
+- name: Common | install tools
+  action: apt pkg={{item}} state=installed
+  with_items:
+    - molly-guard
+    - logrotate
+    - vim
+
+- name: Common | install syspackages
+  action: apt pkg={{item}} state=installed
+  with_items:
+    - curl
+    - git 
+    - strace
+    - sysstat
+    - build-essential
+    - wget
+    - bash-completion
+    - ntp
+    - ntpdate
+    - unzip
+    - bzip2
+    - zip
+    - samba
+    - samba-common
+    - smbclient
+    - sendmail
+    - python
+    - python-pip
+    - python-dev
