@@ -4,7 +4,7 @@
 
 # Looks for the [vagrant] section in the hosts file to determine which machines
 # to operate on.
-- hosts: vagrant
+- hosts: devbox
   sudo: True
   # Looks for roles/{role}/tasks/main.yml for tasks, roles/{role}/handlers/main.yml  
   # for handlers, etcetera.
