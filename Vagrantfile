@@ -20,9 +20,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vconfig|
         config.vm.host_name = "devbox"
         config.vm.network :private_network, ip: "192.168.56.10"
 
-        #config.vm.provision :ansible do |ansible|
-        #    ansible.playbook = "ansible/development.yml"
-        #    ansible.inventory_file = "ansible/development"
-        #end
+        config.vm.provision :ansible do |ansible|
+            ansible.playbook = "ansible/development.yml"
+            ansible.inventory_file = "ansible/development"
+        end
     end
 end
