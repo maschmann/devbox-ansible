@@ -1,0 +1,22 @@
+[user]
+    name = Marc Aschmann
+    email = marc@aschmann.org
+[alias]
+    co = checkout
+    ci = commit -s
+    st = status
+    br = branch --color=auto
+    branch = branch --color=auto
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short --color=auto
+    type = cat-file -t
+    dump = cat-file -p
+    commit = commit -s
+[push]
+    default = tracking
+[color]
+    status = auto
+    branch = auto
+    interactive = auto
+    diff = auto
+[core]
+    excludesfile = ~/.gitignore_global

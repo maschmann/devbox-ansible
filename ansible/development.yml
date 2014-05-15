@@ -11,7 +11,7 @@
   roles:
   	- user
     - common
-    - nginx
-    - php
-    - db
-    - tools
+    #- nginx
+    #- php
+    #- db
+    #- tools

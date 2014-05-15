@@ -1,0 +1,13 @@
+# general ###
+ForwardAgent yes
+
+# specific ###
+Host br0ken.de
+    #Hostname br0ken.de
+    User maschmann
+    #IdentityFile ~/.ssh/github.project1.key
+
+Host achilleus
+    #Hostname achilleus
+    User root
+    #IdentityFile ~/.ssh/github.project1.key
