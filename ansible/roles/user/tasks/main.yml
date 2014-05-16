@@ -1,2 +1,3 @@
 # Add the user 'james' with a bash shell, appending the group 'admins' and 'developers' to the user's groups
-  - user: name=james shell=/bin/bash groups=admins,developers append=yes
+- name: user | add
+	action: user name= shell=/bin/bash groups=admins,developers append=yes

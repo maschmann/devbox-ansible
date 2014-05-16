@@ -11,9 +11,6 @@
 - name: Common | copy bashrc for vagrant
   action: copy src=../files/.bashrc dest=/home/vagrant/.bashrc owner=vagrant group=vagrant mode=0600
 
-- name: Commmon | Update repository
-  action: command /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-
 # Update the repo, because most boxes are heavily outdated
 - name: Commmon | Update repository
   action: command /usr/bin/apt-get update
