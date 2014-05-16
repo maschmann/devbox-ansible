@@ -1,9 +1,25 @@
 # copy needed files
-- copy: src=/srv/myfiles/foo.conf dest=/etc/foo.conf owner=foo group=foo mode=0644
+- name: Common | copy sources.list
+  action: copy src=../files/sources.list dest=/etc/apt/sources.list owner=root group=root mode=0644
+
+- name: Common | copy dotdeb.sources.list
+  action: copy src=../files/dotdeb.sources.list dest=/etc/apt/sources.list.d/dotdeb.sources.list owner=root group=root mode=0644
+
+- name: Common | copy bashrc for root
+  action: copy src=../files/.bashrc dest=/root/.bashrc owner=root group=root mode=0600
+
+- name: Common | copy bashrc for vagrant
+  action: copy src=../files/.bashrc dest=/home/vagrant/.bashrc owner=vagrant group=vagrant mode=0600
+
+- name: Commmon | Update repository
+  action: command /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
 
 # Update the repo, because most boxes are heavily outdated
 - name: Commmon | Update repository
   action: command /usr/bin/apt-get update
+
+- name: Commmon | Upgrade repository
+  action: command apt-get -y dist-upgrade
 
 - name: Common | install tools
   action: apt pkg={{item}} state=installed
@@ -31,6 +47,8 @@
     - samba-common
     - smbclient
     - sendmail
+    - sendmail-bin
     - python
     - python-pip
     - python-dev
+    - python-software-properties

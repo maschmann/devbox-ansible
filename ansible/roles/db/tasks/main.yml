@@ -1,0 +1,14 @@
+- name: mariadb | add sources list
+  action: copy src=../files/mariadb.sources.list dest=/etc/apt/sources.list.d/mariadb.sources.list owner=root group=root mode=0644
+
+- name: mariadb | add key for sources
+  action: command /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
+
+- name: mariadb | update repositories
+	action: command /usr/bin/apt-get update
+
+- name: mariadb | install packages
+  action: apt pkg={{item}} state=installed
+  with_items:
+    - mariadb-server
+    - mariadb-client 
