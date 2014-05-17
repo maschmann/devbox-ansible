@@ -1,10 +1,9 @@
-dev_user: wwwdev
-dev_home: /home/www/wwwdev
-dev_group: wwwdev
+user_home_base: /home/www
+user: wwwdev
 
-default_server_domain: dev.local
-default_server_home: /home/www/wwwdev
-default_server_user: wwwdev
-default_server_group: wwwdev
-default_server_fcgi: 9000
-default_server_pool: default
+nginx_domain: dev.local
+nginx_home: /home/www/wwwdev
+nginx_user: wwwdev
+nginx_group: wwwdev
+nginx_fcgi: 9000
+nginx_pool: default

@@ -2,7 +2,7 @@
 # This playbook will set up a vagrant box for generic LAMP development.
 # See the various roles (especially roles/*/tasks/main.yml) for more details.
 
-# Looks for the [vagrant] section in the hosts file to determine which machines
+# Looks for the [devbox] section in the hosts file to determine which machines
 # to operate on.
 - hosts: devbox
   sudo: True
@@ -10,3 +10,7 @@
   # for handlers, etcetera.
   roles:
     - common
+    - user
+
+  vars_files:
+    - "group_vars/devbox"

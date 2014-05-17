@@ -1,15 +1,11 @@
 # copy needed files
-- name: Common | copy sources.list
-  action: copy src=../files/sources.list dest=/etc/apt/sources.list owner=root group=root mode=0644
-
-- name: Common | copy dotdeb.sources.list
-  action: copy src=../files/dotdeb.sources.list dest=/etc/apt/sources.list.d/dotdeb.sources.list owner=root group=root mode=0644
-
-- name: Common | copy bashrc for root
-  action: copy src=../files/.bashrc dest=/root/.bashrc owner=root group=root mode=0600
-
-- name: Common | copy bashrc for vagrant
-  action: copy src=../files/.bashrc dest=/home/vagrant/.bashrc owner=vagrant group=vagrant mode=0600
+- name: Common | copy files
+  action: copy src=../files/{{ item.path }} dest={{ item.dest }} state=file
+  with_items:
+    - { path: 'sources.list', dest: '/etc/apt/sources.list', mode: 0644 }
+    - { path: 'dotdeb.sources.list', dest: '/etc/apt/sources.list.d/dotdeb.sources.list', mode: 0644 }
+    - { path: '.bashrc', dest: '/root/.bashrc', mode: 0600 }
+    - { path: '.bashrc', dest: '/home/vagrant/.bashrc', owner: vagrant, group: vagrant, mode: 0600 }
 
 # Update the repo, because most boxes are heavily outdated
 - name: Commmon | Update repository
@@ -18,16 +14,12 @@
 - name: Commmon | Upgrade repository
   action: command apt-get -y dist-upgrade
 
-- name: Common | install tools
+- name: Common | install syspackages
   action: apt pkg={{item}} state=installed
   with_items:
     - molly-guard
     - logrotate
     - vim
-
-- name: Common | install syspackages
-  action: apt pkg={{item}} state=installed
-  with_items:
     - curl
     - git 
     - strace
