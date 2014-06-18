@@ -7,7 +7,7 @@
 
 # first create home directory
 - name: user | create home directory {{user_home_base}}/{{user}}
-  action: file path={{user_home_base}}/{{user}}/.ssh state=directory
+  action: file path={{user_home_base}}/{{user}}/.ssh state=directory owner={{user}} group={{user}}
 
 # add user and group stuff
 - name: user | add {{user}} and home {{user_home_base}}/{{user}}
