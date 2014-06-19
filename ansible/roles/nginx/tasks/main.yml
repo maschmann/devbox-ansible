@@ -1,0 +1,9 @@
+- name: install packages
+  action: apt pkg={{item}} state=latest
+  with_items:
+    - nginx
+    - nginx-full
+    - nginx-common
+
+- name: start server
+  service: name=nginx state=started enabled=true

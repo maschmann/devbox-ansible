@@ -1,21 +1,27 @@
-# copy needed files
-- name: Common | copy files
-  action: copy src=../files/{{ item.path }} dest={{ item.dest }} state=file
+- name: copy files
+  action: copy src=../files/{{item.path}} dest={{item.dest}} state=file
   with_items:
-    - { path: 'sources.list', dest: '/etc/apt/sources.list', mode: 0644 }
-    - { path: 'dotdeb.sources.list', dest: '/etc/apt/sources.list.d/dotdeb.sources.list', mode: 0644 }
     - { path: '.bashrc', dest: '/root/.bashrc', mode: 0600 }
     - { path: '.bashrc', dest: '/home/vagrant/.bashrc', owner: vagrant, group: vagrant, mode: 0600 }
 
+- name: add/check wheezy stable
+  apt_repository: repo='deb http://ftp.de.debian.org/debian stable main contrib non-free' state=present
+
+- name: add/check wheezy updates
+  apt_repository: repo='deb http://ftp.debian.org/debian/ wheezy-updates main contrib non-free' state=present
+
+- name: add/check wheezy security updates
+  apt_repository: repo='deb http://security.debian.org/ wheezy/updates main contrib non-free' state=present
+
 # Update the repo, because most boxes are heavily outdated
-- name: Commmon | Update repository
+- name: Update repository
   action: command /usr/bin/apt-get update
 
-- name: Commmon | Upgrade repository
+- name: Upgrade repository
   action: command apt-get -y dist-upgrade
 
-- name: Common | install syspackages
-  action: apt pkg={{item}} state=installed
+- name: install syspackages
+  action: apt pkg={{item}} state=latest
   with_items:
     - molly-guard
     - logrotate
@@ -41,3 +47,4 @@
     - python-pip
     - python-dev
     - python-software-properties
+    - python-mysqldb

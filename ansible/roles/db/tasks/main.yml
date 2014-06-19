@@ -1,14 +1,18 @@
-- name: mariadb | add sources list
-  action: copy src=../files/mariadb.sources.list dest=/etc/apt/sources.list.d/mariadb.sources.list owner=root group=root mode=0644
+- name: add/check repository
+  apt_repository: repo='deb http://mirror2.hs-esslingen.de/mariadb/repo/10.0/debian wheezy main' state=present
 
-- name: mariadb | add key for sources
-  action: command /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
+- name: update repositories
+  action: command /usr/bin/apt-get update
 
-- name: mariadb | update repositories
-	action: command /usr/bin/apt-get update
-
-- name: mariadb | install packages
-  action: apt pkg={{item}} state=installed
+- name: install packages
+  action: apt pkg={{item}} state=latest
   with_items:
     - mariadb-server
-    - mariadb-client 
+    - mariadb-client
+    - mariadb-common
+
+- name: start server
+  service: name=mysql state=started enabled=true
+
+- name: configure the root credentials
+  action: command mysqladmin -u root password vagrant

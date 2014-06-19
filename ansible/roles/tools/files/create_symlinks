@@ -1,0 +1,27 @@
+#!/bin/bash
+
+source /home/scripts/base_config
+source /home/scripts/base_functions
+
+# define files and paths
+FILES=( "git_merge" "git_pull" "git_branch" "ws_restart" "link_configs" )
+SCRIPT_PATH=$CONFIG_BASE_SCRIPT_PATH
+TARGET_PATH="/usr/bin/"
+
+echo "checking for symlinks..."
+echo ""
+# iterate files array
+for FILE in "${FILES[@]}"
+do
+#check if symlink already exists
+	if [ ! -h ${TARGET_PATH}${FILE} ]
+	then
+        #otherwise create ;-)
+		echo "creating symlink for ${FILE}..."
+		sudo ln -s ${SCRIPT_PATH}/${FILE} ${TARGET_PATH}${FILE}
+	else
+	    echo "${FILE} already exists."
+	fi
+done
+echo ""
+echo "... done!"

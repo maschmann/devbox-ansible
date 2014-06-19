@@ -11,6 +11,10 @@
   roles:
     - common
     - user
+    - nginx
+    - php
+    - db
+    - tools
 
   vars_files:
     - "group_vars/devbox"

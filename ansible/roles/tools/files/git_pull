@@ -1,0 +1,24 @@
+#!/bin/bash
+
+source /home/scripts/base_config
+source /home/scripts/base_functions
+
+TITLE=$(cat <<DELIMITER
+stashes changes, pulls current version, pops stash
+DELIMITER
+)
+
+logo "${TITLE}"
+
+echo "------------------------------------------------------"
+echo ""
+echo "stashing our changes... "
+echo ""
+git stash save -q
+echo "pulling (--rebase) current branch state... "
+echo ""
+git pull --rebase
+echo "popping your stash again ;-)"
+echo ""
+git stash pop -q
+echo "done!"

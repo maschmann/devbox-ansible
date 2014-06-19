@@ -1,0 +1,29 @@
+#!/bin/bash
+source /home/scripts/base_config
+source /home/scripts/base_functions
+
+# define files and paths
+FILES=( $(find *.conf -type f) )
+SCRIPT_PATH=$CONFIG_BASE_SCRIPT_PATH
+TARGET_PATH="/usr/bin/"
+
+echo "checking for symlinks..."
+echo ""
+# iterate files array
+for FILE in "${FILES[@]}"
+do
+#check if symlink already exists
+    if [ ! -h ${TARGET_PATH}${FILE} ]
+    then
+        #otherwise create ;-)
+        echo "creating symlink for ${FILE}..."
+        sudo ln -s $(pwd)/${FILE} /etc/nginx/sites-enabled/${FILE}
+    else
+        echo "${FILE} already exists."
+    fi
+done
+echo ""
+echo "restarting webservices..."
+/usr/bin/ws_restart
+echo ""
+echo "... done!"

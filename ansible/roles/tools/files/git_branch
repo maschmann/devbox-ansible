@@ -1,0 +1,140 @@
+#!/bin/bash
+
+source /home/scripts/base_config
+source /home/scripts/base_functions
+
+INTERACTIVE=1
+
+HELP_TEXT=$(cat <<DELIMITER
+usage: <command> -o <arg>
+------------------------------------------------------
+available options:
+------------------------------------------------------
+  -h              show help
+  -t <type>       branch type (feature, refactoring, hotfix)
+  -n <name>       name of new branch (only number_description)
+  -i              interactive mode?
+DELIMITER
+)
+
+TITLE=$(cat <<DELIMITER
+creates a new branch, remotely - and sets correct upstream
+values in [brackets] are defaults
+DELIMITER
+)
+
+logo "${TITLE}"
+
+GIT_STASH="git stash"
+GIT_POP="git pop"
+GIT_PULL="git pull"
+GIT_BRANCH="git checkout -b "
+GIT_CHECKOUT="git checkout "
+GIT_SET_UPSTREAM="git push --set-upstream "
+GIT_BRANCH_OPTIONS=" --color=auto"
+BRANCH_TYPES=( "feature" "refactoring" "hotfix" )
+BRANCH_TYPE="feature"
+BRANCH_ORIGIN="origin"
+SOURCE_BRANCH="stage"
+
+function checkType()
+{
+	if [ ! -z "$1" ]
+	then
+		for i in "${BRANCH_TYPES[@]}"
+		do
+			if [ "$i" == "${1,,}" ]
+			then
+				BRANCH_TYPE=${1,,}
+			fi
+		done
+	fi
+}
+
+function checkBranchName()
+{
+	if [ ! -z "$1" ]
+	then
+		BRANCH_NAME=${1,,}
+		BRANCH_NAME=${BRANCH_TYPE}/${BRANCH_NAME}
+	else
+		echo "you really need a branch name... ;-)"
+		exit
+	fi
+
+#	if [ "hotfix" = "$BRANCH_TYPE"  ]
+#	then
+#		SOURCE_BRANCH="LIVE"
+#	fi
+}
+
+function help()
+{
+	description "${HELP_TEXT}"
+}
+
+if [ $# -gt 0 ]
+then
+	while getopts "ht:n:i" OPTION
+	do
+		case $OPTION in
+			h)
+				help
+				exit 1
+				;;
+			t)
+				BRANCH_IN=${OPTARG}
+				checkType $BRANCH_IN
+				INTERACTIVE=0
+				;;
+			n)
+				BRANCH_NAME_IN=${OPTARG}
+				checkBranchName $BRANCH_NAME_IN
+				INTERACTIVE=0
+				;;
+			i)
+				INTERACTIVE=1
+				;;
+			?)
+				help
+				exit 1
+				;;
+		esac
+	done
+fi
+
+if [ $INTERACTIVE = 1 ]
+then
+
+	echo -n "enter type of branch (${BRANCH_TYPES[@],,}): [feature] "
+	read BRANCH_IN
+	checkType $BRANCH_IN
+
+	echo -n "enter branch name <ticketnumber_short_description>: "
+	read BRANCH_NAME_IN
+	checkBranchName $BRANCH_NAME_IN
+
+fi
+
+echo ""
+echo "------------------------------------------------------"
+echo "stashing your changes & checking out ${SOURCE_BRANCH}"
+echo "please remember to pop your stash when switching back!"
+echo "------------------------------------------------------"
+${GIT_STASH}
+${GIT_CHECKOUT}${SOURCE_BRANCH}
+${GIT_PULL}
+echo "------------------------------------------------------"
+echo "forking ${SOURCE_BRANCH} into ${BRANCH_NAME}..."
+echo "------------------------------------------------------"
+${GIT_BRANCH}${BRANCH_NAME}
+echo "------------------------------------------------------"
+echo "pushing ${BRANCH_NAME} to remote with upstream..."
+echo "------------------------------------------------------"
+${GIT_SET_UPSTREAM}${BRANCH_ORIGIN} ${BRANCH_NAME}
+echo "------------------------------------------------------"
+echo "test pull..."
+echo "------------------------------------------------------"
+${GIT_PULL}
+echo "------------------------------------------------------"
+echo "done...! ;-)"

@@ -1,0 +1,30 @@
+- name: install common
+  action: apt pkg={{item}} state=latest
+  with_items:
+    - php5-fpm
+    - php5-common
+    - php5-cli
+
+- name: install additional packages
+  action: apt pkg={{item}} state=latest
+  with_items:
+    - php-apc
+    - php5-curl
+    - php5-gd
+    - php5-imagick
+    - php5-mcrypt
+    - php5-memcached
+    - php5-mysql
+    - php5-xdebug
+    - php-pear
+    - php5-intl
+    - php5-dev
+    - phpunit
+    - mcrypt
+
+# copy all files needed for a user to his homediir
+- name: copy configs
+  action: copy src=../files{{item.path}} dest={{item.dest}}
+  with_items:
+    - { path: '/custom.php.ini', dest: '/etc/php5/conf.d/custom.php.ini', mode: 0644 }
+    - { path: '/custom.xdebug.ini', dest: '/etc/php5/conf.d/custom.xdebug.ini', mode: 0644 }
