@@ -16,3 +16,4 @@
 
 - name: configure the root credentials
   action: command mysqladmin -u root password vagrant
+  ignore_errors: yes
