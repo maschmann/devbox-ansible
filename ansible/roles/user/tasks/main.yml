@@ -11,7 +11,7 @@
 
 # add user and group stuff
 - name: add {{user}} and home {{user_home_base}}/{{user}}
-  action: user name={{user}} shell=/bin/bash groups=sudoadmin append=yes home={{user_home_base}}/{{user}} state=present
+  action: user name={{user}} shell=/bin/bash groups=sudoadmin append=yes home={{user_home_base}}/{{user}}
 
 # change owner and goup for user directory
 - name: create home directory {{user_home_base}}/{{user}}
@@ -19,7 +19,7 @@
 
 # copy all files needed for a user to his homediir
 - name: copy user files
-  action: copy src=../files{{ item.path }} dest={{user_home_base}}/{{user}}{{ item.dest }} owner={{user}} group={{user}}
+  copy: src=../files{{ item.path }} dest={{user_home_base}}/{{user}}{{ item.dest }} owner={{user}} group={{user}} force=no
   with_items:
     - { path: '/.bashrc', dest: '/.bashrc', mode: 0644 }
     - { path: '/.gitconfig', dest: '/.gitconfig', mode: 0644 }

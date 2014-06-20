@@ -1,7 +1,7 @@
 - name: copy files
-  action: copy src=../files/{{item.path}} dest={{item.dest}} state=file
+  copy: src=../files/{{item.path}} dest={{item.dest}} mode={{item.mode}} owner={{item.owner}} group={{item.group}} force=no
   with_items:
-    - { path: '.bashrc', dest: '/root/.bashrc', mode: 0600 }
+    - { path: '.bashrc', dest: '/root/.bashrc', owner: root, group: root, mode: 0600 }
     - { path: '.bashrc', dest: '/home/vagrant/.bashrc', owner: vagrant, group: vagrant, mode: 0600 }
 
 - name: add/check wheezy stable
