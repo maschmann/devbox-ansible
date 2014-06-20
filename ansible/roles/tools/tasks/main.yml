@@ -8,3 +8,11 @@
     - { path: 'git_pull', dest: 'git_pull', mode: 0655 }
     - { path: 'ws_restart', dest: 'ws_restart', mode: 0655 }
     - { path: 'link_configs', dest: 'link_configs', mode: 0655 }
+
+- name: add php tools
+  action: get_url url={{item.url}} dest=/usr/local/bin/{{item.dest}} mode={{item.mode}}
+  with_items:
+    - { url: 'https://phar.phpunit.de/phpunit.phar', dest: 'phpunit', mode: '555' }
+    - { url: 'https://phar.phpunit.de/phploc.phar', dest: 'phploc', mode: '555' }
+    - { url: 'https://phar.phpunit.de/phpcpd.phar', dest: 'phpcpd', mode: '555' }
+    - { url: 'https://getcomposer.org/composer.phar', dest: 'composer', mode: '555' }
