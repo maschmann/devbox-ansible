@@ -1,6 +1,9 @@
 - name: add/check repository
   apt_repository: repo='deb http://mirror2.hs-esslingen.de/mariadb/repo/10.0/debian wheezy main' state=present
 
+- name: add keyserver
+  action: command /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
+
 - name: update repositories
   action: command /usr/bin/apt-get update
 
