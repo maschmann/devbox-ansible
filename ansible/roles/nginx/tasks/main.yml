@@ -5,5 +5,9 @@
     - nginx-full
     - nginx-common
 
+  # copy all files needed for a user to his homediir
+- name: copy configs
+  copy: src=../files/dev.local.conf dest=/etc/nginx/sites-enabled/dev.local.conf mode=664
+
 - name: start server
   service: name=nginx state=started enabled=true

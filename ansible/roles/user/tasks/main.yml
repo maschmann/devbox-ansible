@@ -13,8 +13,14 @@
   action: file path={{user_home_base}}/{{user}} group={{user}} owner={{user}}
 
 # first create home directory
-- name: create home directory {{user_home_base}}/{{user}}
+- name: create ssh directory {{user_home_base}}/{{user}}
   action: file path={{user_home_base}}/{{user}}/.ssh state=directory owner={{user}} group={{user}}
+
+- name: create htdocs directory
+  action: file path={{user_home_base}}/{{user}}/htdocs state=directory owner={{user}} group={{user}}
+
+- name: create dev.local directory
+  action: file path={{user_home_base}}/{{user}}/htdocs/dev.local state=directory owner={{user}} group={{user}}
 
 # copy all files needed for a user to his homediir
 - name: copy user files
@@ -33,6 +39,7 @@
 - name: restart samba
   command: /etc/init.d/samba restart
 
+# do the sudoers stuff
 - name: copy sudoers file for safety
   command: cp -f /etc/sudoers /etc/sudoers.tmp
 
