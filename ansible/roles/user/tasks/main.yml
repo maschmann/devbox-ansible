@@ -29,6 +29,21 @@
 
 - name: copy smb.conf
   action: copy src=../files/smb.conf dest=/etc/samba/smb.conf owner=root group=root
-#  notify:
-#    - restart smbd
-#    - restart nmbd
+
+- name: restart samba
+  command: /etc/init.d/samba restart
+
+- name: copy sudoers file for safety
+  command: cp -f /etc/sudoers /etc/sudoers.tmp
+
+- name: create sudoers file backup
+  command: cp -f /etc/sudoers /etc/sudoers.bak
+
+- name: make sure we can sudo as admin group
+  lineinfile: dest=/etc/sudoers.tmp state=present regexp='^%sudoadmin' line='%sudoadmin ALL=(ALL) NOPASSWD:ALL'
+
+- name: also make sure ssh-agent works via sudo
+  lineinfile: dest=/etc/sudoers.tmp state=present regexp='^Defaults env_keep\+\=SSH_AUTH_SOCK' line='Defaults env_keep+=SSH_AUTH_SOCK'
+
+- name: final sudoers file check
+  shell: visudo -q -c -f /etc/sudoers.tmp && cp -f /etc/sudoers.tmp /etc/sudoers
