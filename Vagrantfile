@@ -6,7 +6,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |vconfig|
     vconfig.vm.box = "vagrant-debian-wheezy64"
-    vconfig.vm.box_url = "http://vagrant.br0ken.de/debian/wheezy64/v2/vagrant-debian-wheezy64.box"
+    vconfig.vm.box_url = "http://vagrant.br0ken.de/debian/wheezy64/v2.1/vagrant-debian-wheezy64.box"
 
     vconfig.vm.define :devbox do |config|
         config.vm.provider :virtualbox do |v|
