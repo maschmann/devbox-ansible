@@ -1,0 +1,10 @@
+- name: add ppa
+  action: command /usr/bin/apt-add-repository -y ppa:rquillo/ansible
+
+- name: update repository
+  action: command /usr/bin/apt-get update
+
+- name: install packages
+  action: apt pkg={{item}} state=latest
+  with_items:
+    - ansible

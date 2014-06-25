@@ -15,6 +15,7 @@
     - php
     - db
     - tools
+    - ansible
 
   vars_files:
     - "group_vars/devbox"
