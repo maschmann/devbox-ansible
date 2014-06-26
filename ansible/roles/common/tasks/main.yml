@@ -27,7 +27,8 @@
     - logrotate
     - vim
     - curl
-    - git 
+    - git
+    - git-ftp
     - strace
     - sysstat
     - build-essential
