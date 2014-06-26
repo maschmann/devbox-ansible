@@ -1,12 +1,5 @@
-<<<<<<< Updated upstream
-- name: install pip with easy_install
-  action: command /usr/bin/easy_install pip
-
-- name: install ansible
-=======
 - name: install pip
   action: command /usr/bin/easy_install pip
 
 - name: install ansible with pip
->>>>>>> Stashed changes
   action: command /usr/bin/pip install ansible
