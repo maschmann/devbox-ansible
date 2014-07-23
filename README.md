@@ -35,8 +35,8 @@ This equals the vagrant up command but also sets a environment variable to suppr
 ## Connecting to the box
 You've got two options:
 
-* vagrant ssh and then su wwwdata
-* ssh wwwdata@192.158.56.10
+* vagrant ssh and then su wwwdev
+* ssh wwwdev@192.158.56.10
 
 I'd suggest you add something like 
 
