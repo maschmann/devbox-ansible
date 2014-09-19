@@ -17,4 +17,4 @@
     - { url: 'https://phar.phpunit.de/phpcpd.phar', dest: 'phpcpd', mode: '555' }
     - { url: 'https://getcomposer.org/composer.phar', dest: 'composer', mode: '555' }
     - { url: 'https://phar.phpunit.de/phpdcd.phar', dest: 'phpcd', mode: '555' }
-    - { url: 'https://github.com/Halleck45/PhpMetrics/raw/master/build/metrics.phar', dest: 'metrics', mode: '555' }
+    - { url: 'https://github.com/Halleck45/PhpMetrics/raw/master/build/phpmetrics.phar', dest: 'metrics', mode: '555' }
