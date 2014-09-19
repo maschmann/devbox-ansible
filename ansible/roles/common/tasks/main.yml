@@ -13,6 +13,9 @@
 - name: add/check wheezy security updates
   apt_repository: repo='deb http://security.debian.org/ wheezy/updates main contrib non-free' state=present
 
+- name: add/check wheezy backports
+  apt_repository: repo='deb http://ftp.us.debian.org/debian wheezy-backports main' state=present
+
 # Update the repo, because most boxes are heavily outdated
 - name: Update repository
   action: command /usr/bin/apt-get update
@@ -49,3 +52,4 @@
     - python-dev
     - python-software-properties
     - python-mysqldb
+    - nodejs
