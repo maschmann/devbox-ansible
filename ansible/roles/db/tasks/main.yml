@@ -1,13 +1,19 @@
-- name: add/check repository
+- name: add/check mariadb repository
   apt_repository: repo='deb http://mirror2.hs-esslingen.de/mariadb/repo/10.0/debian wheezy main' state=present
 
-- name: add keyserver
+- name: add/check elasticsearch repository
+  apt_repository: repo='deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main' state=present
+
+- name: add mariadb keyserver
   action: command /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
+
+- name: add elasticsearch key
+  apt_key: url=http://packages.elasticsearch.org/GPG-KEY-elasticsearch state=present
 
 - name: update repositories
   action: command /usr/bin/apt-get update
 
-- name: install packages
+- name: install mariadb packages
   action: apt pkg={{item}} state=latest
   with_items:
     - mariadb-server
@@ -20,3 +26,14 @@
 - name: configure the root credentials
   action: command mysqladmin -u root password vagrant
   ignore_errors: yes
+
+#- name: install additional elasticsearch packages
+#  action: apt pkg={{item}} state=latest
+#  with_items:
+#    - sun-java6-jre
+
+- name: install elasticsearch packages
+  action: apt pkg={{item}} state=latest
+  with_items:
+    - openjdk-7-jre-headless
+    - elasticsearch
