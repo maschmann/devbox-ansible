@@ -20,8 +20,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vconfig|
         config.vm.host_name = "devbox"
         config.vm.network :private_network, ip: "192.168.56.10"
 
-        config.vm.provision :ansible do |ansible|
-            ansible.playbook = "ansible/development.yml"
+        if Vagrant::Util::Platform.Windows?
+            config.vm.provision :shell, path: "windows.sh"
+        else
+            config.vm.provision :ansible do |ansible|
+                ansible.playbook = "ansible/development.yml"
+            end
         end
     end
 end
