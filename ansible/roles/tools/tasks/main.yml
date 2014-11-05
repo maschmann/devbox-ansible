@@ -10,7 +10,7 @@
     - { path: 'link_configs', dest: 'link_configs', mode: 655 }
 
 - name: add php tools
-  action: get_url url={{item.url}} dest=/usr/local/bin/{{item.dest}} mode={{item.mode}}
+  action: get_url url={{item.url}} dest=/usr/local/bin/{{item.dest}} mode={{item.mode}} force=yes validate_certs=no
   with_items:
     - { url: 'https://phar.phpunit.de/phpunit.phar', dest: 'phpunit', mode: '555' }
     - { url: 'https://phar.phpunit.de/phploc.phar', dest: 'phploc', mode: '555' }

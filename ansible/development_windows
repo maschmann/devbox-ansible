@@ -1,0 +1,2 @@
+#!/bin/bash
+printf '{ "%s"    : [ "%s" ] }\n' "devbox" "192.168.56.10"
