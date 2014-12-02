@@ -17,7 +17,7 @@ do
     then
         #otherwise create ;-)
         echo "creating symlink for ${FILE}..."
-        sudo ln -s $(pwd)/${FILE} /etc/apache2/sites-enabled/${FILE}
+        sudo ln -s $(pwd)/${FILE} /etc/nginx/sites-enabled/${FILE}
     else
         echo "${FILE} already exists."
     fi
