@@ -1,6 +1,6 @@
 #!/bin/bash
-source /home/scripts/base_config
-source /home/scripts/base_functions
+source /usr/bin/base-config
+source /usr/bin/base-functions
 
 # define files and paths
 FILES=( $(find *.conf -type f) )
@@ -17,13 +17,13 @@ do
     then
         #otherwise create ;-)
         echo "creating symlink for ${FILE}..."
-        sudo ln -s $(pwd)/${FILE} /etc/nginx/sites-enabled/${FILE}
+        sudo ln -s $(pwd)/${FILE} /etc/apache2/sites-enabled/${FILE}
     else
         echo "${FILE} already exists."
     fi
 done
 echo ""
 echo "restarting webservices..."
-/usr/bin/ws_restart
+/usr/bin/ws-restart
 echo ""
 echo "... done!"

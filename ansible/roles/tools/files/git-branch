@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source /home/scripts/base_config
-source /home/scripts/base_functions
+source /usr/bin/base-config
+source /usr/bin/base-functions
 
 INTERACTIVE=1
 
@@ -11,7 +11,7 @@ usage: <command> -o <arg>
 available options:
 ------------------------------------------------------
   -h              show help
-  -t <type>       branch type (feature, refactoring, hotfix)
+  -t <type>       branch type (feature)
   -n <name>       name of new branch (only number_description)
   -i              interactive mode?
 DELIMITER
@@ -32,10 +32,10 @@ GIT_BRANCH="git checkout -b "
 GIT_CHECKOUT="git checkout "
 GIT_SET_UPSTREAM="git push --set-upstream "
 GIT_BRANCH_OPTIONS=" --color=auto"
-BRANCH_TYPES=( "feature" "refactoring" "hotfix" )
+BRANCH_TYPES=( "feature" )
 BRANCH_TYPE="feature"
 BRANCH_ORIGIN="origin"
-SOURCE_BRANCH="stage"
+SOURCE_BRANCH="develop"
 
 function checkType()
 {
@@ -58,7 +58,7 @@ function checkBranchName()
 		BRANCH_NAME=${1,,}
 		BRANCH_NAME=${BRANCH_TYPE}/${BRANCH_NAME}
 	else
-		echo "you really need a branch name... ;-)"
+		echo "you really need a branch name... ;-) feature naming is <ticket-number>_<short_desciption>"
 		exit
 	fi
 
@@ -110,7 +110,7 @@ then
 	read BRANCH_IN
 	checkType $BRANCH_IN
 
-	echo -n "enter branch name <ticketnumber_short_description>: "
+	echo -n "enter branch name <ticket-number>_<short_desciption>: "
 	read BRANCH_NAME_IN
 	checkBranchName $BRANCH_NAME_IN
 

@@ -1,10 +1,10 @@
 #!/bin/bash
 
-source /home/scripts/base_config
-source /home/scripts/base_functions
+source /usr/bin/base-config
+source /usr/bin/base-functions
 
 # define files and paths
-FILES=( "git_merge" "git_pull" "git_branch" "ws_restart" "link_configs" )
+FILES=( "git-merge" "git-pull" "git-branch" "ws-restart" "link-configs" )
 SCRIPT_PATH=$CONFIG_BASE_SCRIPT_PATH
 TARGET_PATH="/usr/bin/"
 

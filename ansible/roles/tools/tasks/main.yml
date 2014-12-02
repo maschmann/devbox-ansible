@@ -1,13 +1,13 @@
 - name: copy scripts
   action: copy src=../files/{{ item.path }} dest=/usr/bin/{{ item.dest }} mode={{item.mode}}
   with_items:
-    - { path: 'base_config', dest: 'base_config', mode: 655 }
-    - { path: 'base_functions', dest: 'base_functions', mode: 655 }
-    - { path: 'git_branch', dest: 'git_branch', mode: 655 }
-    - { path: 'git_merge', dest: 'git_merge', mode: 655 }
-    - { path: 'git_pull', dest: 'git_pull', mode: 655 }
-    - { path: 'ws_restart', dest: 'ws_restart', mode: 655 }
-    - { path: 'link_configs', dest: 'link_configs', mode: 655 }
+    - { path: 'base-config', dest: 'base-config', mode: 655 }
+    - { path: 'base-functions', dest: 'base-functions', mode: 655 }
+    - { path: 'git-branch', dest: 'git-branch', mode: 655 }
+    - { path: 'git-merge', dest: 'git-merge', mode: 655 }
+    - { path: 'git-pull', dest: 'git-pull', mode: 655 }
+    - { path: 'ws-restart', dest: 'ws-restart', mode: 655 }
+    - { path: 'link-configs', dest: 'link-configs', mode: 655 }
 
 - name: add php tools
   action: get_url url={{item.url}} dest=/usr/local/bin/{{item.dest}} mode={{item.mode}} force=yes validate_certs=no

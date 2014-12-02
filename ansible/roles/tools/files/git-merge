@@ -1,0 +1,145 @@
+#!/bin/bash
+
+source /usr/bin/base-config
+source /usr/bin/base-functions
+
+INTERACTIVE=1
+
+HELP_TEXT=$(cat <<DELIMITER
+usage: <command> -o <arg>
+------------------------------------------------------
+available options:
+------------------------------------------------------
+  -h              show help
+  -t <target>     branch to merge to (devlop/master/release)
+  -s <source>     branch to merge
+  -r              rebase?
+  -i              interactive mode?
+DELIMITER
+)
+
+TITLE=$(cat <<DELIMITER
+this script merges a branch to a defined target branch
+values in [brackets] are defaults
+DELIMITER
+)
+
+logo "${TITLE}"
+
+GIT_CHECKOUT="git checkout "
+GIT_PULL="git pull "
+GIT_REBASE="--rebase"
+GIT_MERGE="git merge -Xignore-all-space --squash "
+GIT_COMMIT="git commit"
+
+BRANCH_NAMES=( "develop" "master" "release/xxxx-xx-xx")
+BRANCH="dev"
+REBASE="yes"
+
+function checkTarget()
+{
+    if [ ! -z "$1" ]
+    then
+        # removed check for valid branch names to be more flexible
+        BRANCH=${1^^}
+        #for i in "${BRANCH_NAMES[@]}"
+        #do
+        #    if [ "$i" == "${1^^}" ]
+        #    then
+        #        BRANCH=${1^^}
+        #    fi
+        #done
+    fi
+}
+
+function checkSource()
+{
+    if [ -z "$1" ]
+    then
+        echo "you need to enter a branch name!!!"
+        exit
+    fi
+}
+
+function checkRebase()
+{
+    if [ ! -z "$1" ]
+    then
+        if [ "no" = "$1" ]
+        then
+            GIT_PULL=${GIT_PULL}
+        fi
+    else
+        GIT_PULL=${GIT_PULL}${GIT_REBASE}
+    fi
+}
+
+function help()
+{
+    description "${HELP_TEXT}"
+}
+
+if [ $# -gt 0 ]
+then
+    while getopts "ht:s:ri" OPTION
+    do
+        case $OPTION in
+            h)
+                help
+                exit 1
+                ;;
+            t)
+                BRANCH_IN=${OPTARG^^}
+                checkTarget $BRANCH_IN
+                INTERACTIVE=0
+                ;;
+            s)
+                MERGE_BRANCH_IN=${OPTARG}
+                checkSource $MERGE_BRANCH_IN
+                INTERACTIVE=0
+                ;;
+            r)
+                REBASE_IN="yes"
+                checkRebase $REBASE_IN
+                ;;
+            i)
+                INTERACTIVE=1
+                ;;
+            ?)
+                help
+                exit 1
+                ;;
+        esac
+    done
+fi
+
+if [ $INTERACTIVE = 1 ]
+then
+    echo -n "where do you want to merge to (${BRANCH_NAMES[@],,})? [ develop ] "
+    read BRANCH_IN
+    checkTarget $BRANCH_IN
+
+    echo -n "what do you want to merge (branch name)? "
+    read MERGE_BRANCH_IN
+    checkSource $MERGE_BRANCH_IN
+
+
+    echo -n "do you need a rebase? [yes] "
+    read REBASE_IN
+    checkRebase $REBASE_IN
+fi
+
+echo ""
+echo "checking out ${BRANCH}..."
+${GIT_CHECKOUT}${BRANCH}
+echo "------------------------------------------------------"
+echo "pulling repo..."
+$GIT_PULL
+echo "------------------------------------------------------"
+echo "merge ${MERGE_BRANCH_IN} to ${BRANCH}..."
+${GIT_MERGE}${MERGE_BRANCH_IN}
+echo "------------------------------------------------------"
+echo "commit changes..."
+$GIT_COMMIT
+echo "------------------------------------------------------"
+echo "done!"
