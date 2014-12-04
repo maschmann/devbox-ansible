@@ -18,3 +18,8 @@
     - { url: 'https://getcomposer.org/composer.phar', dest: 'composer', mode: '555' }
     - { url: 'https://phar.phpunit.de/phpdcd.phar', dest: 'phpcd', mode: '555' }
     - { url: 'https://github.com/Halleck45/PhpMetrics/raw/master/build/phpmetrics.phar', dest: 'metrics', mode: '555' }
+
+- name: install doxygen
+  action: apt pkg={{item}} state=latest
+  with_items:
+    - doxygen
