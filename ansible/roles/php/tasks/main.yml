@@ -42,8 +42,12 @@
 - name: copy configs
   action: copy src=../files{{item.path}} dest={{item.dest}} mode={{item.mode}}
   with_items:
-    - { path: '/custom.php.ini', dest: '/etc/php5/conf.d/custom.php.ini', mode: 644 }
-    - { path: '/custom.xdebug.ini', dest: '/etc/php5/conf.d/custom.xdebug.ini', mode: 644 }
+    - { path: '/custom.php.ini', dest: '/etc/php5/fpm/conf.d/custom.php.ini', mode: 644 }
+    - { path: '/custom.xdebug.ini', dest: '/etc/php5/fpm/conf.d/custom.xdebug.ini', mode: 644 }
+    - { path: '/custom.opcache.ini', dest: '/etc/php5/fpm/conf.d/custom.opcache.ini', mode: 644 }
+    - { path: '/custom.php.ini', dest: '/etc/php5/cli/conf.d/custom.php.ini', mode: 644 }
+    - { path: '/custom.xdebug.ini', dest: '/etc/php5/cli/conf.d/custom.xdebug.ini', mode: 644 }
+    - { path: '/custom.opcache.ini', dest: '/etc/php5/cli/conf.d/custom.opcache.ini', mode: 644 }
     - { path: '/dev.local.conf', dest: '/etc/php5/fpm/pool.d/dev.local.conf', mode: 644 }
 
 - name: create slowlog dir
