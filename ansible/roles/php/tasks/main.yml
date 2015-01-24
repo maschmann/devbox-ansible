@@ -1,3 +1,18 @@
+- name: add/check dotdeb packaged
+  apt_repository: repo='deb http://packages.dotdeb.org wheezy-php55 all' state=present
+
+- name: add/check dotdeb packages (source)
+  apt_repository: repo='deb-src http://packages.dotdeb.org wheezy-php55 all' state=present
+
+# Update the repo, because most boxes are heavily outdated
+- name: Update repository
+  action: command /usr/bin/apt-get update
+
+- name: uninstall packages
+  action: apt pkg={{item}} state=absent
+  with_items:
+    - php-apc
+
 - name: install common
   action: apt pkg={{item}} state=latest
   with_items:
@@ -6,14 +21,14 @@
     - php5-cli
 
 - name: install additional packages
-  action: apt pkg={{item}} state=latest
+  action: apt pkg={{item}} state=latest force=yes
   with_items:
-    - php-apc
+    - php5-apcu
     - php5-curl
     - php5-gd
     - php5-imagick
     - php5-mcrypt
-    - php5-memcached
+    - php5-memcache
     - php5-mysql
     - php5-xdebug
     - php-pear
