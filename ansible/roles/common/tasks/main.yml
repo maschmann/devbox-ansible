@@ -21,7 +21,7 @@
   action: command /usr/bin/apt-get update
 
 - name: Upgrade repository
-  action: command apt-get -y dist-upgrade
+  action: command apt-get -y dist-upgrade --force-yes
 
 - name: install syspackages
   action: apt pkg={{item}} state=latest

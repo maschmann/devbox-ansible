@@ -13,6 +13,7 @@
     - user
     - nginx
     - php
+    - mongodb
     - db
     - tools
     - ansible

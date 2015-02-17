@@ -1,0 +1,22 @@
+- name: install/update packages
+  action: apt pkg={{item}} state=latest force=true
+  with_items:
+    - mongodb
+    - mongodb-server
+    - mongodb-clients
+    - php5-mongo
+
+- name: download rockmongo
+  get_url: url=http://github.com/iwind/rockmongo/archive/1.1.7.zip dest=/tmp/rockmongo.zip
+
+- name: make sure we've got no previous installations
+  action: file path=/usr/share/rockmongo/rockmongo-1.1.7 state=absent owner={{user}} group={{user}}
+
+- name: fix permissions
+  action: file path=/usr/share/rockmongo state=directory owner={{user}} group={{user}}
+
+- name: unzip archive
+  unarchive: src=/tmp/rockmongo.zip dest=/usr/share/rockmongo copy=no
+
+- name: make sure all permissions are set
+  action: file path=/usr/share/rockmongo owner={{user}} group={{user}} recurse=true

@@ -11,8 +11,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vconfig|
 
     vconfig.vm.define :devbox do |config|
         config.vm.provider :virtualbox do |v|
-            # set memory to 512MB
-            v.customize [ "modifyvm", :id, "--memory", "512" ]
+            # set memory to 1024MB
+            v.customize [ "modifyvm", :id, "--memory", "1024" ]
             #v.gui = true #debugging
             v.name = "devbox"
             v.cpus = 1
