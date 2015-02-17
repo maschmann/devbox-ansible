@@ -10,7 +10,15 @@
   get_url: url=http://github.com/iwind/rockmongo/archive/1.1.7.zip dest=/tmp/rockmongo.zip
 
 - name: make sure we've got no previous installations
-  action: file path=/usr/share/rockmongo/rockmongo-1.1.7 state=absent owner={{user}} group={{user}}
+  action: file path=/usr/share/rockmongo/rockmongo state=absent owner={{user}} group={{user}}
+
+- name: stat 
+  stat: path=/usr/share/rockmongo/rockmongo-1.1.7
+  register: mongo_stat
+
+- name: rename directory
+  command: mv /usr/share/rockmongo/rockmongo-1.1.7 /usr/share/rockmongo/rockmongo
+  when: mongo_stat.stat.exists
 
 - name: fix permissions
   action: file path=/usr/share/rockmongo state=directory owner={{user}} group={{user}}
