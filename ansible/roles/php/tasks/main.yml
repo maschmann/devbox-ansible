@@ -14,7 +14,7 @@
     - php-apc
 
 - name: install common
-  action: apt pkg={{item}} state=latest
+  action: apt pkg={{item}} state=latest force=yes
   with_items:
     - php5-fpm
     - php5-common
