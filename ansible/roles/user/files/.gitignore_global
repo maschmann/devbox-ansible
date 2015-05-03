@@ -1,2 +1,15 @@
 .idea
 app/cache/*
+
+# files by various IDEs
+.buildpath
+.rsync_cache
+.rsync_cache/*
+.settings/*
+.settings
+.idea/*
+.idea
+.settings/org.eclipse.php.core.prefs
+*.php~
+fabfile.*
+atlassian-ide-plugin.xml
