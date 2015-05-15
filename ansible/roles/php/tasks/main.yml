@@ -1,8 +1,8 @@
 - name: add/check dotdeb packaged
-  apt_repository: repo='deb http://packages.dotdeb.org wheezy-php55 all' state=present
+  apt_repository: repo='deb http://packages.dotdeb.org wheezy-php56 all' state=present
 
 - name: add/check dotdeb packages (source)
-  apt_repository: repo='deb-src http://packages.dotdeb.org wheezy-php55 all' state=present
+  apt_repository: repo='deb-src http://packages.dotdeb.org wheezy-php56 all' state=present
 
 # Update the repo, because most boxes are heavily outdated
 - name: Update repository

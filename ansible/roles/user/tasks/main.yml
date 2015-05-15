@@ -36,8 +36,11 @@
 - name: copy smb.conf
   action: copy src=../files/smb.conf dest=/etc/samba/smb.conf owner=root group=root
 
-- name: restart samba
-  command: /etc/init.d/samba restart
+- name: reload samba
+  command: /etc/init.d/samba reload
+
+- name: ensure smbuser with default pw
+  raw:  (echo "wwwdev"; echo "wwwdev") | smbpasswd -s -a wwwdev
 
 # do the sudoers stuff
 - name: copy sudoers file for safety

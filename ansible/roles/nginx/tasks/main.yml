@@ -9,5 +9,5 @@
 - name: copy configs
   copy: src=../files/dev.local.conf dest=/etc/nginx/sites-enabled/dev.local.conf mode=664
 
-- name: start server
-  service: name=nginx state=started enabled=true
+#- name: start server
+#  service: name=nginx state=started enabled=true
