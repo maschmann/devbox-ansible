@@ -6,7 +6,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |vconfig|
     vconfig.vm.box = "asm/devbox"
-    vconfig.vm.box_url = "http://vagrant.br0ken.de/debian/wheezy64/metadata.json"
+    vconfig.vm.box_url = "http://vagrant.br0ken.de/ubuntu/15.04/metadata.json"
     vconfig.vm.box_check_update = true
 
     vconfig.vm.define :devbox do |config|
@@ -14,11 +14,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vconfig|
             # set memory to 1024MB
             v.customize [ "modifyvm", :id, "--memory", "1024" ]
             #v.gui = true #debugging
-            v.name = "devbox"
+            v.name = "devbox-15-04"
             v.cpus = 1
         end
 
-        config.vm.host_name = "devbox"
+        config.vm.host_name = "devbox-15-04"
         config.vm.network :private_network, ip: "192.168.56.10"
 
         if Vagrant::Util::Platform.windows?
