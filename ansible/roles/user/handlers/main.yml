@@ -2,5 +2,8 @@
 - name: restart smbd
   service: name=smbd state=restarted
 
+- name: reload smbd
+  service: name=smbd state=reloaded
+
 - name: restart nmbd
   service: name=nmbd state=restarted

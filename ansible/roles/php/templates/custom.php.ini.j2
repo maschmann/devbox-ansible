@@ -2,7 +2,7 @@
 ; custom php.ini changes - overwrites php.ini  ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-error_reporting =  E_ALL
+error_reporting =  {{php.error_reporting}}
 
 ; short_open_tag
 ;   Default Value: On
@@ -10,13 +10,13 @@ error_reporting =  E_ALL
 ;   Production Value: Off
 short_open_tag = On
 
-;display_errors = On
+display_errors = {{php.display_errors}}
 
 ; track_errors
 ;   Default Value: Off
 ;   Development Value: On
 ;   Production Value: Off
-track_errors = On
+track_errors = {{php.php.track_errors}}
 
 ; When PHP displays or logs an error, it has the capability of inserting html
 ; links to documentation related to that error. This directive controls whether
@@ -27,23 +27,23 @@ track_errors = On
 ; Development Value: On
 ; Production value: Off
 ; http://php.net/html-errors
-html_errors = On
+html_errors = {{php.html_errors}}
 
 ; Maximum size of POST data that PHP will accept.
 ; http://php.net/post-max-size
-post_max_size = 32M
+post_max_size = {{php.post_max_sixe}}
 
 ; Maximum allowed size for uploaded files.
 ; http://php.net/upload-max-filesize
-upload_max_filesize = 12M
+upload_max_filesize = {{php.upload_max_filesize}}
 
 ; Defines the default timezone used by the date functions
 ; http://php.net/date.timezone
-date.timezone = "Europe/Berlin"
+date.timezone = {{php.date_timezone}}
 
 ; Maximum amount of memory a script may consume (128MB)
 ; http://php.net/memory-limit
-memory_limit = 512M
+memory_limit = {{php.memory_limit}}
 
 ;[suhosin]
 ;suhosin.simulation = On

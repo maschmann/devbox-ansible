@@ -1,14 +1,4 @@
-- name: add/check dotdeb packaged
-  apt_repository: repo='deb http://packages.dotdeb.org wheezy-php56 all' state=present
-
-- name: add/check dotdeb packages (source)
-  apt_repository: repo='deb-src http://packages.dotdeb.org wheezy-php56 all' state=present
-
-# Update the repo, because most boxes are heavily outdated
-- name: Update repository
-  action: command /usr/bin/apt-get update
-
-- name: uninstall packages
+- name: uninstall packages if present
   action: apt pkg={{item}} state=absent
   with_items:
     - php-apc
@@ -42,15 +32,17 @@
 - name: copy configs
   action: copy src=../files{{item.path}} dest={{item.dest}} mode={{item.mode}}
   with_items:
-    - { path: '/custom.php.ini', dest: '/etc/php5/fpm/conf.d/custom.php.ini', mode: 644 }
-    - { path: '/custom.xdebug.ini', dest: '/etc/php5/fpm/conf.d/custom.xdebug.ini', mode: 644 }
-    - { path: '/custom.opcache.ini', dest: '/etc/php5/fpm/conf.d/custom.opcache.ini', mode: 644 }
-    - { path: '/custom.cli.php.ini', dest: '/etc/php5/cli/conf.d/custom.php.ini', mode: 644 }
-    - { path: '/custom.cli.opcache.ini', dest: '/etc/php5/cli/conf.d/custom.opcache.ini', mode: 644 }
+    - { path: '/custom.xdebug.ini', dest: '/etc/php5/fpm/conf.d/99-custom.xdebug.ini', mode: 644 }
+    - { path: '/custom.opcache.ini', dest: '/etc/php5/fpm/conf.d/99-custom.opcache.ini', mode: 644 }
+    - { path: '/custom.cli.opcache.ini', dest: '/etc/php5/cli/conf.d/99-custom.opcache.ini', mode: 644 }
     - { path: '/dev.local.conf', dest: '/etc/php5/fpm/pool.d/dev.local.conf', mode: 644 }
+
+- name: create custom configs
+  template: src={{item.src}} dest={{item.dest}} owner=root group=root mode={{item.mode}}
+  with_items:
+    - { src: '/custom.php.ini', dest: '/etc/php5/fpm/conf.d/99-custom.php.ini', mode: 644 }
+    - { src: '/custom.cli.php.ini', dest: '/etc/php5/cli/conf.d/99-custom.php.ini', mode: 644 }
 
 - name: create slowlog dir
   action: file path=/var/log/php-fpm/ state=directory
-
-- name: start php-fpm server
-  service: name=php5-fpm state=started enabled=true
+  notify: start php-fpm

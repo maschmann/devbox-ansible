@@ -4,21 +4,20 @@
     - { path: '.bashrc', dest: '/root/.bashrc', owner: root, group: root, mode: 600 }
     - { path: '.bashrc', dest: '/home/vagrant/.bashrc', owner: vagrant, group: vagrant, mode: 600 }
 
-- name: add/check wheezy stable
-  apt_repository: repo='deb http://ftp.de.debian.org/debian stable main contrib non-free' state=present
+- name: add repositories
+  apt_repository: repo="{{item}}"
+  register: multiverse_installed
+  update_cache: false  # We will do ourselfs afterwards
+  when: ansible_distribution == 'Ubuntu'
+  with_items:
+    - 'deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}} multiverse'
+    - 'deb-src http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}} multiverse'
+    - 'deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}}-updates multiverse'
+    - 'deb-src http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}}-updates multiverse'
 
-- name: add/check wheezy updates
-  apt_repository: repo='deb http://ftp.debian.org/debian/ wheezy-updates main contrib non-free' state=present
-
-- name: add/check wheezy security updates
-  apt_repository: repo='deb http://security.debian.org/ wheezy/updates main contrib non-free' state=present
-
-- name: add/check wheezy backports
-  apt_repository: repo='deb http://ftp.us.debian.org/debian wheezy-backports main' state=present
-
-# Update the repo, because most boxes are heavily outdated
-- name: Update repository
-  action: command /usr/bin/apt-get update
+- apt:
+  update_cache: true
+  when: multiverse_installed | changed
 
 - name: Upgrade repository
   action: command apt-get -y dist-upgrade --force-yes
@@ -31,6 +30,7 @@
     - vim
     - curl
     - git
+    - git-flow
     - git-ftp
     - strace
     - sysstat

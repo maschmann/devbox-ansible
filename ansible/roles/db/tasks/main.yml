@@ -1,8 +1,8 @@
 - name: add/check mariadb repository
-  apt_repository: repo='deb http://mirror2.hs-esslingen.de/mariadb/repo/10.0/debian wheezy main' state=present
+  apt_repository: repo='deb http://mirrors.coreix.net/mariadb/repo/10.0/ubuntu vivid main' state=present
 
 - name: add/check elasticsearch repository
-  apt_repository: repo='deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main' state=present
+  apt_repository: repo='deb http://packages.elasticsearch.org/elasticsearch/1.3/ubuntu vivid main' state=present
 
 - name: add mariadb keyserver
   action: command /usr/bin/apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
@@ -26,11 +26,6 @@
 - name: configure the root credentials
   action: command mysqladmin -u root password vagrant
   ignore_errors: yes
-
-#- name: install additional elasticsearch packages
-#  action: apt pkg={{item}} state=latest
-#  with_items:
-#    - sun-java6-jre
 
 - name: install elasticsearch packages
   action: apt pkg={{item}} state=latest

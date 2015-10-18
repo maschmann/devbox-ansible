@@ -1,0 +1,11 @@
+---
+php:
+  error_reporting: E_ALL
+  display_errors: On
+  short_open_tag: On
+  track_errors: On
+  html_errors: On
+  post_max_size: 32M
+  upload_max_filesize: 12M
+  date_timezone: "Europe/Berlin"
+  memory_limit: 512M
