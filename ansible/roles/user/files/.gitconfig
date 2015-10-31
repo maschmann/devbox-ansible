@@ -1,6 +1,6 @@
 [user]
-    name = Marc Aschmann
-    email = marc@aschmann.org
+    name = {{git_username}}
+    email = {{git_email}}
 [alias]
     co = checkout
     ci = commit -s

@@ -30,18 +30,18 @@
 
 # copy all files needed for a user to his homediir
 - name: copy configs
-  action: copy src=../files{{item.path}} dest={{item.dest}} mode={{item.mode}}
+  action: copy src=../files/{{item.path}} dest=/etc/php5/{{item.dest}} mode={{item.mode}}
   with_items:
-    - { path: '/custom.xdebug.ini', dest: '/etc/php5/fpm/conf.d/99-custom.xdebug.ini', mode: 644 }
-    - { path: '/custom.opcache.ini', dest: '/etc/php5/fpm/conf.d/99-custom.opcache.ini', mode: 644 }
-    - { path: '/custom.cli.opcache.ini', dest: '/etc/php5/cli/conf.d/99-custom.opcache.ini', mode: 644 }
-    - { path: '/dev.local.conf', dest: '/etc/php5/fpm/pool.d/dev.local.conf', mode: 644 }
+    - { path: 'custom.xdebug.ini', dest: 'fpm/conf.d/99-custom.xdebug.ini', mode: 644 }
+    - { path: 'custom.opcache.ini', dest: 'fpm/conf.d/99-custom.opcache.ini', mode: 644 }
+    - { path: 'custom.cli.opcache.ini', dest: 'cli/conf.d/99-custom.opcache.ini', mode: 644 }
+    - { path: 'dev.local.conf', dest: 'fpm/pool.d/dev.local.conf', mode: 644 }
 
 - name: create custom configs
-  template: src={{item.src}} dest={{item.dest}} owner=root group=root mode={{item.mode}}
+  template: src=../files/{{item.src}} dest=/etc/php5/{{item.dest}} owner=root group=root mode={{item.mode}}
   with_items:
-    - { src: '/custom.php.ini', dest: '/etc/php5/fpm/conf.d/99-custom.php.ini', mode: 644 }
-    - { src: '/custom.cli.php.ini', dest: '/etc/php5/cli/conf.d/99-custom.php.ini', mode: 644 }
+    - { src: 'custom.php.ini', dest: 'fpm/conf.d/99-custom.php.ini', mode: 644 }
+    - { src: 'custom.cli.php.ini', dest: 'cli/conf.d/99-custom.php.ini', mode: 644 }
 
 - name: create slowlog dir
   action: file path=/var/log/php-fpm/ state=directory

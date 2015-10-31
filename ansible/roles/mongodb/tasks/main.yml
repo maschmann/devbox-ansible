@@ -1,3 +1,4 @@
+---
 - name: install/update packages
   action: apt pkg={{item}} state=latest force=true
   with_items:

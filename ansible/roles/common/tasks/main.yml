@@ -1,26 +1,30 @@
+---
 - name: copy files
   copy: src=../files/{{item.path}} dest={{item.dest}} mode={{item.mode}} owner={{item.owner}} group={{item.group}}
   with_items:
     - { path: '.bashrc', dest: '/root/.bashrc', owner: root, group: root, mode: 600 }
     - { path: '.bashrc', dest: '/home/vagrant/.bashrc', owner: vagrant, group: vagrant, mode: 600 }
+    #- { path: 'motd', dest: '/etc/motd', owner: root, group: root, mode: 644 }
+    #- { path: 'motd', dest: '/etc/motd.tail', owner: root, group: root, mode: 644 }
 
 - name: add repositories
-  apt_repository: repo="{{item}}"
-  register: multiverse_installed
-  update_cache: false  # We will do ourselfs afterwards
-  when: ansible_distribution == 'Ubuntu'
+  action: apt_repository repo="deb {{item}}" state=present
   with_items:
-    - 'deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}} multiverse'
-    - 'deb-src http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}} multiverse'
-    - 'deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}}-updates multiverse'
-    - 'deb-src http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}}-updates multiverse'
+    - "http://ubuntu.mirror.lrz.de/ubuntu vivid main restricted universe multiverse"
+    - "http://ubuntu.mirror.lrz.de/ubuntu vivid-updates main restricted universe multiverse"
+    - "http://ubuntu.mirror.lrz.de/ubuntu vivid-security main restricted universe multiverse"
 
-- apt:
-  update_cache: true
-  when: multiverse_installed | changed
+- name: Update repository
+  apt: update_cache=yes cache_valid_time=3600
 
 - name: Upgrade repository
-  action: command apt-get -y dist-upgrade --force-yes
+  apt: upgrade=dist force=yes
+
+- name: Cleanup
+  action: command apt-get autoclean
+
+- name: Remove old packages
+  action: command apt-get -y autoremove
 
 - name: install syspackages
   action: apt pkg={{item}} state=latest
@@ -31,9 +35,9 @@
     - curl
     - git
     - git-flow
-    - git-ftp
     - strace
     - sysstat
+    - sshfs
     - build-essential
     - wget
     - bash-completion

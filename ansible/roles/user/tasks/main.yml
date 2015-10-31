@@ -22,12 +22,27 @@
 - name: create dev.local directory
   action: file path={{user_home_base}}/{{user}}/htdocs/dev.local state=directory owner={{user}} group={{user}}
 
+- name: check if there's already a gitconfig
+  stat: path={{user_home_base}}/{{user}}/.gitconfig
+  register: gitconfig
+
+- name: check if there's already an aliases-file
+  stat: path={{user_home_base}}/{{user}}/.bash_aliases
+  register: aliases
+
+- name: copy gitconfig
+  copy: src=../files/.gitconfig dest={{user_home_base}}/{{user}}/.gitconfig owner={{user}} group={{user}} mode=644
+  when: gitconfig.stat.exists == false
+
+- name: copy bash_aliases
+  copy: src=../files/.bash_aliases dest={{user_home_base}}/{{user}}/.bash_aliases owner={{user}} group={{user}} mode=644
+  when: aliases.stat.exists == false
+
 # copy all files needed for a user to his homediir
 - name: copy user files
   copy: src=../files{{ item.path }} dest={{user_home_base}}/{{user}}{{ item.dest }} owner={{user}} group={{user}}
   with_items:
     - { path: '/.bashrc', dest: '/.bashrc', mode: 644 }
-    - { path: '/.gitconfig', dest: '/.gitconfig', mode: 644 }
     - { path: '/.gitignore_global', dest: '/.gitignore_global', mode: 644 }
     - { path: '/.vimrc', dest: '/.vimrc', mode: 644 }
     - { path: '/authorized_keys', dest: '/.ssh/authorized_keys', mode: 600 }

@@ -1,11 +1,7 @@
+---
 - name: copy scripts
   action: copy src=../files/{{ item.path }} dest=/usr/bin/{{ item.dest }} mode={{item.mode}}
   with_items:
-    - { path: 'base-config', dest: 'base-config', mode: 655 }
-    - { path: 'base-functions', dest: 'base-functions', mode: 655 }
-    - { path: 'git-branch', dest: 'git-branch', mode: 655 }
-    - { path: 'git-merge', dest: 'git-merge', mode: 655 }
-    - { path: 'git-pull', dest: 'git-pull', mode: 655 }
     - { path: 'ws-restart', dest: 'ws-restart', mode: 655 }
     - { path: 'link-configs', dest: 'link-configs', mode: 655 }
 

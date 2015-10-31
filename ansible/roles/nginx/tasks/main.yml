@@ -1,3 +1,4 @@
+---
 - name: install packages
   action: apt pkg={{item}} state=latest
   with_items:

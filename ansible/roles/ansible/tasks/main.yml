@@ -1,3 +1,4 @@
+---
 - name: install pip
   action: command /usr/bin/easy_install pip
 

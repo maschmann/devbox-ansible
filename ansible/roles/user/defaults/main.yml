@@ -1,3 +1,7 @@
+---
 dev_user: wwwdev
 dev_home: /home/wwwdev
 dev_group: wwwdev
+
+git_username: "Marc Aschmann"
+git_email: "marc@aschmann.org"
