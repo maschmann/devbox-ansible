@@ -19,9 +19,10 @@ After cloning the repository to your local environment, add your ssh public key 
 
     devbox-ansible/ansible/roles/user/files/authorized_keys
     
-and your name and email address to basic git config
+and your name and email address to group_vars:
 
-    devbox-ansible/ansible/roles/user/files/.gitconfig
+    user_home_base: /home
+    user: wwwdev
 
 That should do it :-)
 
@@ -45,3 +46,8 @@ I'd suggest you add something like
 
 Or similar to your local hosts file to ease your access to the virtual machine.
 The "dev.local" part is the default address your nginx installation will listen to.
+
+
+## Further steps in devbox development
+
+For later releases of this devbox I will rely more on already established ansible galaxy packages. Namely Jeff Geerling's :-)

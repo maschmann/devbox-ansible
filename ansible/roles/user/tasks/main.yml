@@ -31,7 +31,7 @@
   register: aliases
 
 - name: copy gitconfig
-  copy: src=../files/.gitconfig dest={{user_home_base}}/{{user}}/.gitconfig owner={{user}} group={{user}} mode=644
+  template: src=../templates/.gitconfig dest={{user_home_base}}/{{user}}/.gitconfig owner={{user}} group={{user}} mode=644
   when: gitconfig.stat.exists == false
 
 - name: copy bash_aliases

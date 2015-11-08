@@ -1,0 +1,6 @@
+---
+
+nginx_multi_accept: 'on'
+nginx_use_gzip: True
+nginx_keepalive_timeout: 65
+nginx_keepalive_requests: 100
