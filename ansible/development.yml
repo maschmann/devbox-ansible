@@ -6,12 +6,12 @@
     - user
     #- nginx
     - { role: geerlingguy.nginx }
-    - nginx-common
+    - nginx-custom
     - php
-    #- { role: geerlingguy.php }
     - mongodb
     - db
     - { role: geerlingguy.adminer }
+    - adminer-custom
     - tools
     - ansible
 

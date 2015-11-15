@@ -1,0 +1,4 @@
+---
+- name: Add adminer config to nginx
+  template: src=./adminer.conf.j2 dest=/etc/nginx/sites-enabled/adminer.{{admin_domain}}.de.conf owner=root group=root mode=644
+  notify: restart nginx

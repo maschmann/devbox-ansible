@@ -1,0 +1,47 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name .adminer.{{admin_domain}};
+
+    access_log /var/log/nginx/{{admin_domain}}.access.log;
+    error_log /var/log/nginx/{{admin_domain}}.error.log;
+
+    if ($host != "adminer.{{admin_domain}}") {
+        rewrite (.*) https://adminer.{{admin_domain}}/$1 permanent;
+    }
+
+    index adminer.php;
+    set $root_path '/opt/adminer';
+    root $root_path;
+
+    try_files $uri $uri/ @rewrite;
+
+    location @rewrite {
+        rewrite ^/(.*)$ /adminer.php?_url=/$1;
+    }
+
+    location ~ \.php {
+        root $root_path;
+        fastcgi_index /adminer.php;
+        include /etc/nginx/fastcgi_params;
+        fastcgi_split_path_info       ^(.+\.php)(/.+)$;
+        fastcgi_param PATH_INFO       $fastcgi_path_info;
+        fastcgi_param PATH_TRANSLATED $document_root$fastcgi_path_info;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param REQUEST_URI     $request_uri;
+        fastcgi_pass 127.0.0.1:{{admin_fcgi_port}};
+        fastcgi_buffer_size 128k;
+        fastcgi_buffers 256 16k;
+        fastcgi_busy_buffers_size 256k;
+        fastcgi_temp_file_write_size 256k;
+    }
+
+    location ~* ^/(css|img|js|flv|swf|download)/(.+)$ {
+        root $root_path;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
