@@ -1,0 +1,7 @@
+---
+mysql_root_user: root
+mysql_root_pw: vagrant
+mysql_vagrant_user: vagrant
+mysql_vagrant_pw: vagrant
+
+mariadb_bind_address: '127.0.0.1'

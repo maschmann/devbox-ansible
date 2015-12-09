@@ -1,0 +1,11 @@
+---
+mysql_root_password: vagrant
+mysql_users:
+  - name: vagrant
+    host: "%"
+    password: vagrant
+    priv: "*.*:ALL,GRANT"
+mysql_packages:
+  - mariadb-client
+  - mariadb-server
+  - python-mysqldb
