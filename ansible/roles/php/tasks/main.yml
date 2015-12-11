@@ -26,7 +26,6 @@
     - php5-dev
     - phpunit
     - mcrypt
-    - phpmyadmin
 
 # copy all files needed for a user to his homediir
 - name: copy configs

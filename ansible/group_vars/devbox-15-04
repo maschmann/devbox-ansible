@@ -1,3 +1,4 @@
+---
 user_home_base: /home
 user: wwwdev
 
@@ -16,3 +17,22 @@ nginx_sendfile: "on"
 nginx_keepalive_timeout: "65"
 nginx_keepalive_requests: "100"
 nginx_client_max_body_size: "64m"
+
+###
+mysql_packages:
+  - mysql-client
+  - mysql-server
+  - php5-mysql
+  - python-mysqldb
+
+mysql_log: ""
+mysql_log_error: /var/log/mysql.err
+mysql_syslog_tag: mysqld
+
+mysql_root_password: vagrant
+mysql_root_password_update: yes
+mysql_users:
+  - name: vagrant
+    host: "%"
+    password: vagrant
+    priv: "*.*:ALL,GRANT"

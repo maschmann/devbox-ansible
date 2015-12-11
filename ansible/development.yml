@@ -2,19 +2,16 @@
 - hosts: devbox-15-04
   sudo: True
   vars_files:
-    - vars/main.yml
+    - "group_vars/devbox-15-04"
   roles:
     - common
-    #- user
-    #- nginx
-    #- php
-    #- mongodb
+    - user
+    - nginx
+    - php
+    - mongodb
     #- db
     - { role: geerlingguy.mysql }
-    #- { role: geerlingguy.adminer }
-    #- adminer-custom
-    #- tools
-    #- ansible
-
-  vars_files:
-    - "group_vars/devbox-15-04"
+    - { role: geerlingguy.adminer }
+    - adminer-custom
+    - tools
+    - ansible
