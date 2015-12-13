@@ -5,7 +5,7 @@
     - { path: '.bashrc', dest: '/root/.bashrc', owner: root, group: root, mode: 600 }
     - { path: '.bashrc', dest: '/home/vagrant/.bashrc', owner: vagrant, group: vagrant, mode: 600 }
     - { path: 'hosts', dest: '/etc/hosts', owner: root, group: root, mode: 666 }
-    - { path: 'my.cnf', dest: '~/.my.cnf', owner: root, group: root, mode: 666 }
+    - { path: 'my.cnf', dest: '~/.my.cnf', owner: root, group: root, mode: 644 }
     #- { path: 'motd', dest: '/etc/motd', owner: root, group: root, mode: 644 }
     #- { path: 'motd', dest: '/etc/motd.tail', owner: root, group: root, mode: 644 }
 

@@ -42,6 +42,10 @@
     - { src: 'custom.php.ini', dest: 'fpm/conf.d/99-custom.php.ini', mode: 644 }
     - { src: 'custom.cli.php.ini', dest: 'cli/conf.d/99-custom.php.ini', mode: 644 }
 
+- name: remove default configs
+  file: path=/etc/php5/fpm/pool.d/www.conf state=absent
+  notify: restart php-fpm
+
 - name: create slowlog dir
-  action: file path=/var/log/php-fpm/ state=directory
+  file: path=/var/log/php-fpm/ state=directory
   notify: start php-fpm
