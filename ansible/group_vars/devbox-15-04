@@ -24,9 +24,11 @@ mysql_packages:
   - mysql-server
   - php5-mysql
   - python-mysqldb
+overwrite_global_mycnf: yes
+mysql_enabled_on_startup: yes
 
 mysql_log: ""
-mysql_log_error: /var/log/mysql.err
+mysql_log_error: /var/log/mysql/error.log
 mysql_syslog_tag: mysqld
 
 mysql_root_password: vagrant
